@@ -22,6 +22,11 @@ public:
 		m_status = false;
 		std::cout << "Engine stopped." << std::endl;
 	}
+
+	bool engineStatus()
+	{
+		return m_status;
+	}
 };
 
 class Car
@@ -29,44 +34,28 @@ class Car
 private:
 	std::string m_brand;
 	std::string m_model;
-	bool m_engineStatus;
-	Engine* m_engine;
-
-	void engineCheck()
-	{
-		std::cout << "Engine started." << std::endl;
-	}
+	Engine m_engine;
 
 public:
-	Car(std::string brand, std::string model, Engine* engine)
+	Car(std::string brand, std::string model)
 	{
 		m_brand = brand;
 		m_model = model;
-		m_engineStatus = false;
-		m_engine = engine;
 	}
 
 	void engineON()
 	{
-		if (m_engine)
-		{
-			m_engine->start();
-			m_engineStatus = true;
-		}
+		m_engine.start();
 	}
 
 	void engineOFF()
 	{
-		if (m_engine)
-		{
-			m_engine->stop();
-			m_engineStatus = false;
-		}
+		m_engine.stop();
 	}
 
 	void drive()
 	{
-		if (m_engineStatus)
+		if (m_engine.engineStatus())
 		{
 			std::cout << "Driving. The engine is ON " << std::endl;
 		}
@@ -122,8 +111,7 @@ public:
 
 int main()
 {
-	Engine engine1;
-	Car car1("Nissan", "Versa", &engine1);	
+	Car car1("Nissan", "Versa");	
 	Driver driver1("Garnik");
 	
 	driver1.StartCar(car1);
